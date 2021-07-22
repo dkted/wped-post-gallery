@@ -2,7 +2,7 @@
 
 namespace WPED\Base;
 
-class CustomPostTypes
+class CustomPostTypeController
 {
     public function register()
     {

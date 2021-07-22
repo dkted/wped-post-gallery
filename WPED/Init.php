@@ -8,7 +8,8 @@ final class Init
 	{
 		return [
             Base\Enqueue::class,
-            Base\CustomPostTypes::class,
+            Base\CustomPostTypeController::class,
+            Base\MetaBoxController::class,
 		];
 	}
 

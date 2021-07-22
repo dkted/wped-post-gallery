@@ -1,0 +1,46 @@
+.event-metabox {
+
+    button {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .metabox-images {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        margin-top: 10px;
+        justify-content: center;
+
+        .image {
+            position: relative;
+            width: 150px;
+            min-width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: solid thin transparent;
+            margin-right: 15px;
+            margin-bottom: 15px;
+
+            user-select: none;
+            
+            .close {
+                position: absolute;
+                z-index: 10;
+                right: 0;
+                top: 0;
+                transform: translate(50%,-50%);
+                width: 20px;
+                height: 20px;
+                border-radius: 100%;
+                background-color: white;
+                cursor: pointer;
+                text-align: center;
+                border: solid thin grey;
+            }
+        }
+    }
+
+}

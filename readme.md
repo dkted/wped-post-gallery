@@ -7,7 +7,7 @@
 $ composer init
 ```
 
-2. Setup Autoload (psr-4) then execute below
+2. Setup Autoload (psr-4)
 
 ```json
 {

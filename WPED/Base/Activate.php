@@ -2,6 +2,8 @@
 
 namespace WPED\Base;
 
+use WPED\Base\MetaBoxController;
+
 class Activate
 {
 	public static function activate()
