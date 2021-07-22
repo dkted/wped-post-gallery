@@ -18,6 +18,7 @@ if (file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
 
 define('WPEDPG', 'wpedpg');
 define('WPEDPG_POST_TYPE', 'wpedpg_gallery');
+define('WPEDPG_METABOX_ID', 'wpedpg_metabox_id');
 define('WPEDPG_PATH', plugin_dir_path(__FILE__));
 define('WPEDPG_URL', plugin_dir_url(__FILE__));
 define('WPEDPG_BASENAME', plugin_basename(__FILE__));

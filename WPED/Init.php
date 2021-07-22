@@ -10,6 +10,7 @@ final class Init
             Base\Enqueue::class,
             Base\CustomPostTypeController::class,
             Base\MetaBoxController::class,
+            Base\GraphQLController::class,
 		];
 	}
 

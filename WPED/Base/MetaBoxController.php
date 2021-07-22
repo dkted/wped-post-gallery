@@ -16,7 +16,7 @@ class MetaBoxController
 
         $this->metaboxes = array(
             array(
-                'id'                => 'wpedpg_event_gallery',
+                'id'                => WPEDPG_METABOX_ID,
                 'title'             => 'Event Gallery',
                 'callback'          => array($this->callbacks, 'gallery'),
                 'screen'            => WPEDPG_POST_TYPE,
@@ -73,11 +73,12 @@ class MetaBoxController
     public function savePost($post_id)
     {
         foreach ($this->metaboxes as $metabox) {
-            $title = $metabox['id'] . '_title';
+            $metaboxID = $metabox['id'];
+            $title = $metaboxID . '_title';
 
-            if (isset($_POST[$title]) && $this->validateField($post_id, $metabox['id'])) {
+            if (isset($_POST[$title]) && $this->validateField($post_id, $metaboxID)) {
                 $title_data = sanitize_text_field($_POST[$title]);
-                $postImages = isset($_POST[$metabox['id'].'_images'])? $_POST[$metabox['id'].'_images'] : [];
+                $postImages = isset($_POST[$metaboxID.'_images'])? $_POST[$metaboxID.'_images'] : [];
                 $images = [];
 
                 foreach ($postImages as $index => $image) {
@@ -91,9 +92,9 @@ class MetaBoxController
                     'title' => $title_data,
                     'images' => $images,
                 ];
-                update_post_meta($post_id, $metabox['id'], $data);
+                update_post_meta($post_id, $metaboxID, $data);
             }
         }
     }
-    
+
 }

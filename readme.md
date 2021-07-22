@@ -1,4 +1,4 @@
-# DKTWP Gallery
+# WP Post Gallery Plugin
 
 
 1. Setup Composer
