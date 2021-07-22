@@ -1,0 +1,17 @@
+{
+    "name": "eeddd/wped-post-gallery",
+    "description": "Custom Plugin for Post's Gallery",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "ed",
+            "email": "e.orgel@dkt.com.ph"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"WPED\\": "./WPED"}
+    }
+}
