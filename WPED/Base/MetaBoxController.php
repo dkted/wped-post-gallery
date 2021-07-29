@@ -2,6 +2,7 @@
 
 namespace WPED\Base;
 
+use Exception;
 use WPED\Callbacks\MetaBoxCallbacks;
 
 class MetaBoxController
@@ -29,6 +30,8 @@ class MetaBoxController
         add_action('add_meta_boxes', array($this, 'addMetaBoxes'));
 
         add_action('save_post', array($this, 'savePost'));
+
+        add_action('wp_ajax_wpedpg_gallery', [$this, 'ajaxImportIds']);
     }
 
     public function addMetaBoxes()
@@ -74,27 +77,54 @@ class MetaBoxController
     {
         foreach ($this->metaboxes as $metabox) {
             $metaboxID = $metabox['id'];
-            $title = $metaboxID . '_title';
+            $title = $metaboxID .'_title';
+            $videoUrl = $metaboxID .'_video_url';
 
             if (isset($_POST[$title]) && $this->validateField($post_id, $metaboxID)) {
                 $title_data = sanitize_text_field($_POST[$title]);
-                $postImages = isset($_POST[$metaboxID.'_images'])? $_POST[$metaboxID.'_images'] : [];
-                $images = [];
-
-                foreach ($postImages as $index => $image) {
-                    $images[] = [
-                        'id' => $image['id'],
-                        'url' => $image['url'],
-                    ];
-                }
-
+                $videoUrl_data = sanitize_text_field($_POST[$videoUrl]);
+                $images_data = isset($_POST[$metaboxID.'_images'])? $_POST[$metaboxID.'_images'] : [];
+                
                 $data = [
                     'title' => $title_data,
-                    'images' => $images,
+                    'video_url' => $videoUrl_data,
+                    'images' => $images_data,
                 ];
                 update_post_meta($post_id, $metaboxID, $data);
             }
         }
+    }
+    
+    public function ajaxImportIds()
+    {
+        $response = [
+            'status' => '',
+            'data' => ['postID' => 0, 'images' => [], 'newImages' => []]
+        ];
+        try {
+            $data = json_decode(stripslashes($_POST['data']));
+            $meta = get_post_meta(intval($data->{'postID'}), WPEDPG_METABOX_ID, true);
+                        
+            $images = array_unique(
+                array_merge($meta['images'], $data->{'ids'})
+            );
+
+            $response['data']['postID'] = $data->{'postID'};
+            $response['data']['newImages'] = count($data->{'ids'}) > 0? $data->{'ids'} : [];
+            $response['data']['images'] = $meta['images'];
+            
+            $meta['images'] = $images;
+
+            $response['status'] = 'Success';
+
+            update_post_meta( $data->{'postID'}, WPEDPG_METABOX_ID, $meta );
+            
+        } catch(Exception $ex) {
+            $response['status'] = 'Failed';
+        }
+
+        wp_send_json($response);
+        wp_die();
     }
 
 }

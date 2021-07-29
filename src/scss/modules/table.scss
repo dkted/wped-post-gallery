@@ -1,0 +1,18 @@
+.event-metabox {
+	table {
+		border-collapse: collapse;
+		width: 100%;
+
+		label {
+			width: 100%;
+		}
+
+		td > input {
+			width: 100%;
+		}
+
+		td button {
+			cursor: pointer;
+		}
+	}
+}

@@ -1,0 +1,31 @@
+.event-metabox {
+    .import-ids-modal {
+        position: absolute;
+        padding: 2rem;
+        inset: 0;
+        display: none;
+        background-color: rgba($color: #000, $alpha: 0.8);
+        z-index: 100;
+
+        label {
+            color: white;
+        }
+
+        button, input {
+            cursor: pointer;
+        }
+
+        textarea {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        pre {
+            color: greenyellow;
+        }
+
+        &.show {
+            display: block;
+        }
+    }
+}

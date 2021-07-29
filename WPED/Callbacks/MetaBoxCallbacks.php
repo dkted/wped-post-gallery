@@ -7,6 +7,7 @@ class MetaBoxCallbacks
 	public function gallery($post, $metabox)
 	{
 		$metaboxID = $metabox['id'];
+		$postID = $post->ID;
 
 		wp_nonce_field($metaboxID.'_data', $metaboxID.'_nonce');
 

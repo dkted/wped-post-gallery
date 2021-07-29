@@ -1,10 +1,11 @@
 
 window.addEventListener("load", function() {
+	'use strict';
 	
 	// images modal
 	
 	function addGalleryImage(imagesJson) {
-		let frag = document.createDocumentFragment(), inputID, inputURL, div, img, span,
+		let frag = document.createDocumentFragment(), inputID, div, img, span,
 			container = document.querySelector('.metabox-images'),
 			childCount = document.querySelectorAll('.metabox-images .image').length;
 		let metaboxID = container.getAttribute('data-metabox-id');
@@ -14,32 +15,24 @@ window.addEventListener("load", function() {
 
 			inputID = document.createElement('input');
 			inputID.type = 'hidden';
-			inputID.name = metaboxID +'['+ index +'][id]';
+			inputID.name = metaboxID +'[]';
 			inputID.value = ob.id;
-
-			inputURL = document.createElement('input');
-			inputURL.type = 'hidden';
-			inputURL.name = metaboxID +'['+ index +'][url]';
-
-			['large','medium','full','thumbnail'].forEach(function(size) {
-				if (ob.sizes.hasOwnProperty(size)) {
-					inputURL.value = ob.sizes[size].url;
-				}
-			});
-
+	
 			div = document.createElement('div');
 			div.classList.add('image');
 
 			img = document.createElement('img');
-			img.src = ob.sizes.thumbnail.url;
-			img.width = ob.sizes.thumbnail.width;
-			img.height = ob.sizes.thumbnail.height;
+			['thumbnail','medium','full','large'].forEach(function(size) {
+				if (ob.sizes.hasOwnProperty(size)) {
+					img.src = ob.sizes[size].url;
+				}
+			});
+			
 
 			span = document.createElement('span');
 			span.classList.add('close', 'dashicons-before', 'dashicons-no-alt');
 
 			div.appendChild(inputID);
-			div.appendChild(inputURL);
 			div.appendChild(img);
 			div.appendChild(span);
 			frag.appendChild(div);
@@ -67,15 +60,86 @@ window.addEventListener("load", function() {
 	};
 
 	let btnImagesModal = document.querySelector('#btn-images-modal');
-	if (btnImagesModal) btnImagesModal.addEventListener('click', btnImagesModalClickListener);
+	if (!!btnImagesModal) btnImagesModal.addEventListener('click', btnImagesModalClickListener);
 
-	document.querySelectorAll('.metabox-images .image').forEach(function(elm) {
-		elm.addEventListener('click', function(e) {
+	let metaboxImages = document.querySelector('.metabox-images');
+	
+	if (!!metaboxImages) metaboxImages.addEventListener('click', function(e) {
+		if (e.target.classList.contains('close')) {
 			e.preventDefault();
-			if (e.target.classList.contains('close')) {
-				e.currentTarget.parentNode.removeChild(e.currentTarget);
+			e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+		}
+	}, true);
+	
+
+	let btnCopyPostTitle = document.querySelector('.btn-copy-post-title');
+	if (!!btnCopyPostTitle) {
+		btnCopyPostTitle.addEventListener('click', function() {
+			let val = document.querySelector('.editor-post-title__input').value;
+			let inputMetaTitle = document.querySelector('#wpedpg_metabox_id_title');
+			if (inputMetaTitle) {
+				inputMetaTitle.value = val;
 			}
 		});
-	});
+	}
+
+	let btnRemoveAllImages = document.querySelector('.remove-all-metabox-images');
+	if (!!btnRemoveAllImages) {
+		btnRemoveAllImages.addEventListener('click', function() {
+			let child = metaboxImages.lastElementChild;
+			while (child) {
+				metaboxImages.removeChild(child);
+				child = metaboxImages.lastElementChild;
+			}
+		});
+	}
+
+	let btnImportIdsShow = document.querySelector('.import-ids-show');
+	if (!!btnImportIdsShow) {
+		btnImportIdsShow.addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.import-ids-modal').classList.add('show');
+		});
+	}
+
+
+	// Import Modal
+	let btnImportIdsCancel = document.querySelector('.import-ids-cancel'),
+		btnImportIdsSubmit = document.querySelector('.import-ids-submit');
+
+	if (!!btnImportIdsCancel) {
+		btnImportIdsCancel.addEventListener('click', function(e) {
+			e.preventDefault();
+			e.currentTarget.parentNode.classList.remove('show');
+		});
+	}
+	if (!!btnImportIdsSubmit) {
+		btnImportIdsSubmit.addEventListener('click', function(e) {
+			e.preventDefault();
+			let textarea = document.querySelector('#import-ids-value'),
+				postID = btnImportIdsSubmit.getAttribute('data-post-id');
+
+			let ids = JSON.parse(textarea.value),
+				data = {
+					postID: postID,
+					ids: ids 
+				};
+
+			let ajax = {
+				type: "POST",
+				url: "/wp-admin/admin-ajax.php",
+				data: 'action=wpedpg_gallery&data='+ JSON.stringify(data),
+				success: function(msg) {
+					console.log(msg)
+					window.location.reload();
+				}
+			};
+
+			console.log(ajax);
+
+			jQuery.ajax(ajax);
+			
+		});
+	}
 
 });

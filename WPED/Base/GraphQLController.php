@@ -14,15 +14,26 @@ class GraphQLController
         register_graphql_object_type('DktImage', [
             'fields' => [
                 'id'            => [ 'type' => 'Int' ],
-                'url'           => [ 'type' => 'String' ],
+                'urls'          => [ 'type' => 'DktImageSizes' ],
+            ]
+        ]);
+
+        register_graphql_object_type('DktImageSizes', [
+            'fields' => [
+                'thumbnail'     => ['type' => 'String'],
+                'medium'        => ['type' => 'String'],
+                'large'         => ['type' => 'String'],
+                'full'          => ['type' => 'String'],
             ]
         ]);
 
         register_graphql_object_type('DktGallery', [
             'fields' => [
                 'postId'        => [ 'type' => 'Int' ],
-                'postTitle'         => [ 'type' => 'String' ],
+                'postTitle'     => [ 'type' => 'String' ],
+                'postSlug'      => [ 'type' => 'String' ],
                 'title'         => [ 'type' => 'String' ],
+                'videoUrl'      => [ 'type' => 'String' ],
                 'images'        => [ 'type' => ['list_of' => 'DktImage'] ],
             ]
         ]);
@@ -49,18 +60,24 @@ class GraphQLController
                     $metas = is_array($metas)? $metas : ['images' => [], 'title' => ''];
                     $images = [];
                 
-                    foreach ($metas['images'] as $image) {
+                    foreach ($metas['images'] as $imageID) {
                         $images[] = [
-                            'id' => $image['id'],
-                            'url' => wp_get_attachment_image_url($image['id'], 'full'),
+                            'id' => $imageID,
+                            'urls' => [
+                                'thumbnail'     => wp_get_attachment_image_url($imageID, 'thumbnail'),
+                                'medium'        => wp_get_attachment_image_url($imageID, 'medium'),
+                                'large'         => wp_get_attachment_image_url($imageID, 'large'),
+                                'full'          => wp_get_attachment_image_url($imageID, 'full'),
+                            ],
                         ];
                     }
                 
                     $posts[] = [
-                        'postId'	=> $post->ID,
-                        'postTitle' => $post->post_title,
-                        'title' => $metas['title'],
-                        'images' => $images
+                        'postId'	    => $post->ID,
+                        'postTitle'     => $post->post_title,
+                        'postSlug'      => $post->post_name,
+                        'title'         => $metas['title'],
+                        'images'        => $images
                     ];
                 }                
 
