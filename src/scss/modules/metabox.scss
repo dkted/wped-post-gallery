@@ -40,7 +40,34 @@
                 cursor: pointer;
                 text-align: center;
                 border: solid thin grey;
+                opacity: 0.3;
+                transition: opacity 400ms ease;
             }
+
+            &:hover .close {
+                opacity: 1;
+            }
+        }
+    }
+
+    .gallery-buttons {
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        position:sticky;
+        bottom:0;
+        z-index:11;
+        padding: 0.7rem;
+        background-color: rgba($color: #fff, $alpha: 0.4);
+        backdrop-filter: blur(16px);
+
+        button {
+            padding: 0.4rem 1rem;
+            font-weight: bold;
+        }
+
+        button:not(:last-of-type) {
+            margin-right: .6rem;
         }
     }
 

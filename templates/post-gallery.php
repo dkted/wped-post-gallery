@@ -43,22 +43,25 @@
                         </div>
                         <?php } ?>
                     </div>
-                    <div style="display:flex; flex-direction:end;">
+                    <div class="gallery-buttons" >
                         <button id='btn-images-modal'>Add Images</button>
                         <button class="remove-all-metabox-images">Clear</button>
                         <button class="import-ids-show">Import IDs</button>
                     </div>
 
                     <div class="import-ids-modal">
-                        <div>
-                            <label for="import-ids-value">Import attachment IDs</label>
-                            <pre>ex: ["1243","3211", "4332" ...]</pre>
+                        <div style="color: white; position:sticky; top: 2rem;">
+                            <div>
+                                <h3>Import attachment IDs</h3>
+                                <p>You can also use wp-cli to copy IDs from Foobar Gallery:</p>
+                                <pre class="bash">$wp post meta get [ID] foogallery_attachments --format=json | clip</pre>
+                            </div>
+                            <div>
+                                <textarea name="import-ids" id="import-ids-value" cols="30" rows="10" placeholder='[ "1243", "3211", "4332", ... ]'></textarea>
+                            </div>
+                            <button class="import-ids-cancel">Cancel</button>
+                            <button class="import-ids-submit" data-post-id="<?php echo $postID?>">Import</button>
                         </div>
-                        <div>
-                            <textarea name="import-ids" id="import-ids-value" cols="30" rows="10"></textarea>
-                        </div>
-                        <button class="import-ids-cancel">Cancel</button>
-                        <button class="import-ids-submit" data-post-id="<?php echo $postID?>">Import</button>
                     </div>
                 </td>
             </tr>

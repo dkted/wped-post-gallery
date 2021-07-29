@@ -14,5 +14,15 @@
 		td button {
 			cursor: pointer;
 		}
+
+		td input[type=text],
+		td input[type=text]:focus,
+		td input[type=text]:focus-within,
+		td input[type=text]:active {
+			border: none;
+			outline: none;
+			box-shadow: none;
+
+		}
 	}
 }

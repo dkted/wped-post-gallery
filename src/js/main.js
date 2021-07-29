@@ -110,7 +110,7 @@ window.addEventListener("load", function() {
 	if (!!btnImportIdsCancel) {
 		btnImportIdsCancel.addEventListener('click', function(e) {
 			e.preventDefault();
-			e.currentTarget.parentNode.classList.remove('show');
+			document.querySelector('.import-ids-modal').classList.remove('show');
 		});
 	}
 	if (!!btnImportIdsSubmit) {
@@ -134,11 +134,8 @@ window.addEventListener("load", function() {
 					window.location.reload();
 				}
 			};
-
-			console.log(ajax);
-
-			jQuery.ajax(ajax);
 			
+			jQuery.ajax(ajax);			
 		});
 	}
 
