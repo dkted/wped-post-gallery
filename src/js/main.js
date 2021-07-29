@@ -139,4 +139,13 @@ window.addEventListener("load", function() {
 		});
 	}
 
+	let btnBashClipboard = document.querySelector('.btn-bash-copy');
+	if (!!btnBashClipboard) btnBashClipboard.addEventListener('click', function(e) {
+		e.preventDefault();
+		let elmBash = document.querySelector('.bash-hidden');
+		elmBash.select();
+		elmBash.setSelectionRange(0,99999);
+		document.execCommand('copy');
+	});
+
 });

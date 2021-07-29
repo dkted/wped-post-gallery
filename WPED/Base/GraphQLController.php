@@ -47,8 +47,9 @@ class GraphQLController
             'resolve'           => function($source, $args, $context, $info) 
             {
                 $query_args = [
-                    'post_type' => WPEDPG_POST_TYPE,
-                    'post_status' => 'publish',
+                    'post_type'     => WPEDPG_POST_TYPE,
+                    'post_status'   => 'publish',
+                    'nopaging'      => true,
                 ];
                 
                 $query = get_posts($query_args);
@@ -77,7 +78,7 @@ class GraphQLController
                         'postTitle'     => $post->post_title,
                         'postSlug'      => $post->post_name,
                         'title'         => $metas['title'],
-                        'images'        => $images
+                        'images'        => $images,
                     ];
                 }                
 

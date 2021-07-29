@@ -3,8 +3,15 @@
 		border-collapse: collapse;
 		width: 100%;
 
-		label {
+		tr > td:first-of-type {
+			padding-right: 1rem;
+		}
+
+		tr > td > label {
 			width: 100%;
+			text-align: right;
+			display: block;
+			padding-right: 1rem;
 		}
 
 		td > input {

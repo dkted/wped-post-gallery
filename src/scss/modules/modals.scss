@@ -4,11 +4,14 @@
         padding: 2rem;
         inset: 0;
         display: none;
-        background-color: rgba($color: #000, $alpha: 0.8);
+        background-color: rgba($color: #fff, $alpha: 0.3);
+        backdrop-filter: blur(16px);
         z-index: 100;
+        overflow: hidden;
 
-        h3 {
-            color: white;
+        .import-ids-modal-content {
+            position:sticky;
+            top: 2rem;
         }
 
         button, input {

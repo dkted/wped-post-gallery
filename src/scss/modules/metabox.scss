@@ -10,10 +10,10 @@
         width: 100%;
         min-height: 400px;
         max-width: 100%;
+        padding: 15px 0 0 0;
         display: flex;
         flex-wrap: wrap;
-        padding: 10px;
-        margin-top: 10px;
+        justify-content: center;
 
         .image {
             position: relative;
@@ -40,7 +40,7 @@
                 cursor: pointer;
                 text-align: center;
                 border: solid thin grey;
-                opacity: 0.3;
+                opacity: 0.1;
                 transition: opacity 400ms ease;
             }
 
