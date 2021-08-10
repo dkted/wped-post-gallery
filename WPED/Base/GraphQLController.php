@@ -29,12 +29,13 @@ class GraphQLController
 
         register_graphql_object_type('DktGallery', [
             'fields' => [
-                'postId'        => [ 'type' => 'Int' ],
-                'postTitle'     => [ 'type' => 'String' ],
-                'postSlug'      => [ 'type' => 'String' ],
-                'title'         => [ 'type' => 'String' ],
-                'videoUrl'      => [ 'type' => 'String' ],
-                'images'        => [ 'type' => ['list_of' => 'DktImage'] ],
+                'postId'            => [ 'type' => 'Int' ],
+                'postTitle'         => [ 'type' => 'String' ],
+                'postSlug'          => [ 'type' => 'String' ],
+                'title'             => [ 'type' => 'String' ],
+                'videoUrl'          => [ 'type' => 'String' ],
+                'images'            => [ 'type' => ['list_of' => 'DktImage'] ],
+                'featuredImageUrl'  => [ 'type' => 'String' ]
             ]
         ]);
   
@@ -72,13 +73,17 @@ class GraphQLController
                             ],
                         ];
                     }
+
+                    $featuredImageUrl = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), 'full');
                 
                     $posts[] = [
-                        'postId'	    => $post->ID,
-                        'postTitle'     => $post->post_title,
-                        'postSlug'      => $post->post_name,
-                        'title'         => $metas['title'],
-                        'images'        => $images,
+                        'postId'            => $post->ID,
+                        'postTitle'         => $post->post_title,
+                        'postSlug'          => $post->post_name,
+                        'title'             => $metas['title'],
+                        'videoUrl'          => $metas['video_url'],
+                        'images'            => $images,
+                        'featuredImageUrl'  => $featuredImageUrl,
                     ];
                 }                
 
