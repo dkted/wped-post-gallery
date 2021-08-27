@@ -15,6 +15,7 @@ class GraphQLController
             'fields' => [
                 'id'            => [ 'type' => 'Int' ],
                 'urls'          => [ 'type' => 'DktImageSizes' ],
+                'alt'           => [ 'type' => 'String' ],
             ]
         ]);
 
@@ -35,7 +36,8 @@ class GraphQLController
                 'title'             => [ 'type' => 'String' ],
                 'videoUrl'          => [ 'type' => 'String' ],
                 'images'            => [ 'type' => ['list_of' => 'DktImage'] ],
-                'featuredImageUrl'  => [ 'type' => 'String' ]
+                'featuredImageUrl'  => [ 'type' => 'String' ],
+                'modifiedGmt'       => [ 'type' => 'String' ],
             ]
         ]);
   
@@ -71,6 +73,7 @@ class GraphQLController
                                 'large'         => wp_get_attachment_image_url($imageID, 'large'),
                                 'full'          => wp_get_attachment_image_url($imageID, 'full'),
                             ],
+                            'alt' => get_post_meta($imageID, '_wp_attachment_image_alt', true)
                         ];
                     }
 
@@ -84,6 +87,7 @@ class GraphQLController
                         'videoUrl'          => $metas['video_url'],
                         'images'            => $images,
                         'featuredImageUrl'  => $featuredImageUrl,
+                        'modifiedGmt'       => $post->post_modified_gmt,
                     ];
                 }                
 
